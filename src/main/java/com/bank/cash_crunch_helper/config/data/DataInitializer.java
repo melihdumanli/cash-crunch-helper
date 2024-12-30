@@ -32,6 +32,7 @@ class DataInitializer {
             customer.setCreditLimit(10000.0);
             customer.setUsedCreditLimit(0.0);
             customer.setLoans(new ArrayList<>());
+            customer.setIdentityNumber(12345678901L);
 
             Loan loan = new Loan();
             loan.setCustomer(customer);

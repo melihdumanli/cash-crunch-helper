@@ -1,15 +1,17 @@
 package com.bank.cash_crunch_helper.dbmodel;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "loan_installment")
 @Data
-@RequiredArgsConstructor
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoanInstallment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +19,7 @@ public class LoanInstallment {
 
     @ManyToOne
     @JoinColumn(name = "loan_id", nullable = false)
+    @JsonBackReference
     private Loan loan;
 
     private Double amount;
