@@ -5,6 +5,8 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +16,12 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .components(new Components())
+                .components(new Components()
+                        .addSecuritySchemes("Bearer Authentication", new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT")))
+                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .info(new Info()
                         .title("Cash Crunch Helper")
                         .description("Cash Crunch Helper provides API to manage loans and interest rates. " +
@@ -24,7 +31,7 @@ public class OpenApiConfig {
                                 "API accesses are secured with JWT.")
                         .contact(new Contact().email("melihdumanli@hotmail.com"))
                         .license(new License().name("Source Code").url("https://github.com/melihdumanli/cash-crunch-helper"))
-                        .version("1.0.0")
-                );
+                        .version("1.0.0"));
     }
+
 }
