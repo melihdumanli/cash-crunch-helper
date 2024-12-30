@@ -33,7 +33,7 @@ public class JwtService {
     public String  generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
+                .map(authority -> authority.getAuthority().replace("ROLE_", ""))
                 .collect(Collectors.toList()));
         return generateToken(claims, userDetails);
     }
@@ -62,7 +62,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractClaims(String token) {
+    public Claims extractClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSigningKey())
